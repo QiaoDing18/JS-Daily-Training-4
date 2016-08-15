@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>键盘</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		html{
+			background-color: lightblue;
+		}
+		.btns{
+			width: 400px;
+			height: 100px;
+			margin: 200px auto;
+			background-color: lightgreen;
+			color: red;
+			font-size: 30px;
+			line-height: 100px;
+			text-align: center;
+			border-radius: 40px;
+		}
+		.btns span{
+			padding: 10px;
+			background-color: lightyellow;
+			border-radius: 10px;
+			box-shadow: 3px 3px 3px #666;
+		}
+		.btns span:hover{
+			cursor: pointer;
+			box-shadow: 5px 5px 3px #666;
+			transition: .6s;
+		}
+		.btns span:active{
+			box-shadow: 2px 2px #666;
+			transition: .2s;
+		}
+		#show{
+			width: 300px;
+			height: 120px;
+			margin: -180px auto 0px;
+			background-color: lightyellow;
+			border-radius: 20px;
+			text-align: center;
+			line-height: 120px;
+			color: #EC3619;
+			font-size: 30px;
+		}
+	</style>
+	<script>
+	var data = ["库里", "詹姆斯", "维金斯", "帕克", "克拉克森", "德拉蒙德"];
+		timer = null;
+		flag = 0;
+
+	window.onload = function(){
+		var play = document.getElementById("play"),
+			stop = document.getElementById("stop");
+
+		//开始事件
+		play.onclick = playFun;
+		stop.onclick = stopFun;
+
+		//键盘事件
+		document.onkeyup = function(event){
+			event = event || window.event;
+			//判断按的是否为回车 
+			if(event.keyCode == 13){
+				if(flag == 0){
+					playFun();
+					flag = 1;
+				}else{
+					stopFun();
+					flag = 0;
+				}
+			}
+		}
+	}
+	function playFun(){
+		var show = document.getElementById('show');
+			play = document.getElementById("play");
+			random = null;
+		//关掉原先的定时器
+		clearInterval(timer);
+		timer = setInterval(function(){
+			random = Math.floor(Math.random()*data.length);
+			show.innerHTML = data[random];
+			//console.log(data[random]);
+		}, 60);
+		play.style.backgroundColor = "#999";
+		play.style.boxShadow = "1px 1px #666"
+	}
+	function stopFun(){
+		clearInterval(timer);
+		var play = document.getElementById("play");
+		play.style.backgroundColor = "lightyellow";
+		play.style.boxShadow = "3px 3px 3px #666";
+	}
+	</script>
+</head>
+<body>
+	<div class="btns">
+		<span id="play">开始</span>
+		<span id="stop">结束</span>
+	</div>
+	<div id="show">
+
+	</div>
+</body>
+</html>
